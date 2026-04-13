@@ -23,15 +23,20 @@ jobs:
           pip install scikit-learn joblib
 
       - name: Run training
-        run: python train.py
+        run: |
+          python train.py
+
+     
+      - name: List files
+        run: ls -l
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: model-artifacts
           path: |
-            model.pkl
-            metrics.json
+            ./model.pkl
+            ./metrics.json
 
   report:
     needs: train
@@ -42,6 +47,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: model-artifacts
+
+      
+      - name: List downloaded files
+        run: ls -l
 
       - name: Print completion message
         run: |

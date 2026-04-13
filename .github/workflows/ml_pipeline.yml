@@ -1,0 +1,46 @@
+name: ML Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  train:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install scikit-learn joblib
+
+      - name: Run training
+        run: python train.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: model-artifacts
+          path: |
+            model.pkl
+            metrics.json
+
+  report:
+    needs: train
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: model-artifacts
+
+      - name: Print completion message
+        run: echo "Run completed by: B CHAMITH KALYAN - 2022BCS0117"

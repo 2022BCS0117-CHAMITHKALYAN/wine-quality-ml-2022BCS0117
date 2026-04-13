@@ -2,7 +2,8 @@ name: ML Pipeline
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   train:
@@ -43,4 +44,5 @@ jobs:
           name: model-artifacts
 
       - name: Print completion message
-        run: echo "Run completed by: B CHAMITH KALYAN - 2022BCS0117"
+        run: |
+          echo "Run completed by: B CHAMITH KALYAN - 2022BCS0117"
